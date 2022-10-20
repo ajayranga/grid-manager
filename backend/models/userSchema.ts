@@ -6,7 +6,7 @@ import { alertSchema } from './alertSchema';
 
 export const userSchema = new mongoose.Schema<IUser>(
   {
-    userName: {
+    name: {
       type: String,
       trim: true,
       lowercase: true,
@@ -19,6 +19,13 @@ export const userSchema = new mongoose.Schema<IUser>(
       lowercase: true,
       unique: true,
       required: [true, 'Email is required'],
+      validate: [
+        (email: string) => {
+          var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          return re.test(email);
+        },
+        'Please enter a valid email',
+      ],
     },
     password: {
       type: String,
@@ -32,6 +39,13 @@ export const userSchema = new mongoose.Schema<IUser>(
       trim: true,
       length: 10,
       required: [true, 'Phone Number is required'],
+      validate: [
+        (phone: string) => {
+          var re = /^[0-9]]{10}$/;
+          return re.test(phone);
+        },
+        'Please enter a valid Phone number',
+      ],
     },
     alerts: [alertSchema],
   },

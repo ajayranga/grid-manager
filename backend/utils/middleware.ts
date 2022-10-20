@@ -6,12 +6,18 @@ import dotenv from 'dotenv';
 import IUser from '../types/User';
 dotenv.config();
 
+interface JwtPayload {
+  _id: string;
+}
 export const protect = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     let token = req.headers.authorization;
     if (token && token.startsWith('Bearer')) {
       try {
-        const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
+        const decoded = (await jwt.verify(
+          token.split(' ')[1],
+          process.env.JWT_SECRET as string
+        )) as JwtPayload;
         req.user = await User.findById(decoded._id).select('-password');
         next();
       } catch (error) {
