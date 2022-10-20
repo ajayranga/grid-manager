@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userSchema';
 import generateToken from '../utils/generateToken';
 
-export const signUpHandler = asyncHandler(
+export const getAllAlertsHandler = asyncHandler(
   async (req: Request, res: Response) => {
     const { name, email, password, phone } = req.body;
     if (!name || !email || !password || !phone) {
@@ -38,7 +38,7 @@ export const signUpHandler = asyncHandler(
   }
 );
 
-export const signInHandler = asyncHandler(async (req, res) => {
+export const addAlertHandler = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
@@ -71,7 +71,7 @@ export const signInHandler = asyncHandler(async (req, res) => {
   }
 });
 
-export const logOutHandler = asyncHandler(async (req, res) => {
+export const deleteAlertHandler = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);

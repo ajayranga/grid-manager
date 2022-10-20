@@ -9,6 +9,7 @@ import expressRateLimit from 'express-rate-limit';
 import './utils/dbConnect';
 
 import authRoutes from './routes/authRoutes';
+import alertRoutes from './routes/alertRoutes';
 
 const limiter = expressRateLimit({ windowMs: 3 * 60 * 1000, max: 50 });
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth/', authRoutes);
+app.use('/api/alert/', alertRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(path.resolve(), 'client', 'dist')));
