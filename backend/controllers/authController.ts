@@ -28,10 +28,10 @@ export const signUpHandler = asyncHandler(
             phone: userData.phone,
             token: await generateToken(userData._id),
           });
-        } catch (error) {
+        } catch (error: any) {
           console.log(error);
           res.status(400);
-          throw new Error('Invalid details');
+          throw new Error(error);
         }
       }
     }
@@ -44,23 +44,29 @@ export const signInHandler = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Email and password are required');
   } else {
-    const user = await User.findOne({ email });
-    if (user) {
-      if (await user.matchPass(password)) {
-        res.status(200).json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          phone: user.phone,
-          token: await generateToken(user._id),
-        });
+    try {
+      const user = await User.findOne({ email });
+      if (user) {
+        if (await user.matchPass(password)) {
+          res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            token: await generateToken(user._id),
+          });
+        } else {
+          res.status(401);
+          throw new Error('Incorrect password');
+        }
       } else {
         res.status(401);
-        throw new Error('Incorrect password');
+        throw new Error(`No user exist with email ${email}`);
       }
-    } else {
-      res.status(401);
-      throw new Error(`No user exist with email ${email}`);
+    } catch (error: any) {
+      console.log(error);
+      res.status(400);
+      throw new Error(error);
     }
   }
 });

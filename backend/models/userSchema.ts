@@ -41,7 +41,7 @@ export const userSchema = new mongoose.Schema<IUser>(
       required: [true, 'Phone Number is required'],
       validate: [
         (phone: string) => {
-          var re = /^[0-9]]{10}$/;
+          var re = /^[0-9]{10}$/;
           return re.test(phone);
         },
         'Please enter a valid Phone number',
