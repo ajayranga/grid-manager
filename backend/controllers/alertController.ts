@@ -1,39 +1,18 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
+import Alert from '../models/alertSchema';
 
 import User from '../models/userSchema';
 import generateToken from '../utils/generateToken';
 
 export const getAllAlertsHandler = asyncHandler(
   async (req: Request, res: Response) => {
-    const { name, email, password, phone } = req.body;
-    if (!name || !email || !password || !phone) {
-      res.status(400);
-      throw new Error('Name, Email, Phone number and password are required');
-    } else {
-      const userExist = await User.findOne({
-        $or: [{ email: email }, { phone: phone }],
-      });
-      if (userExist) {
-        res.status(400);
-        throw new Error('Email or Phone Number Already registered');
-      } else {
-        try {
-          const newUser = new User({ name, email, password, phone });
-          const userData = await newUser.save();
-          res.status(201).json({
-            _id: userData._id,
-            name: userData.name,
-            email: userData.email,
-            phone: userData.phone,
-            token: await generateToken(userData._id),
-          });
-        } catch (error: any) {
-          console.log(error);
-          res.status(400);
-          throw new Error(error);
-        }
-      }
+    try {
+      const allAlerts = await Alert.find();
+      res.status(201).json(allAlerts);
+    } catch (error: any) {
+      res.status(404);
+      throw new Error(error.message);
     }
   }
 );

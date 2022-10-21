@@ -9,64 +9,52 @@ export const signUpHandler = asyncHandler(
     const { name, email, password, phone } = req.body;
     if (!name || !email || !password || !phone) {
       res.status(400);
-      throw new Error('Name, Email, Phone number and password are required');
+      throw new Error('Name, Email, Phone Number and password are required')
     } else {
       const userExist = await User.findOne({
         $or: [{ email: email }, { phone: phone }],
       });
       if (userExist) {
         res.status(400);
-        throw new Error('Email or Phone Number Already registered');
+        throw new Error('Email or Phone Number Already registered')
       } else {
-        try {
-          const newUser = new User({ name, email, password, phone });
-          const userData = await newUser.save();
-          res.status(201).json({
-            _id: userData._id,
-            name: userData.name,
-            email: userData.email,
-            phone: userData.phone,
-            token: await generateToken(userData._id),
-          });
-        } catch (error: any) {
-          console.log(error);
-          res.status(400);
-          throw new Error(error);
-        }
+        const newUser = new User({ name, email, password, phone });
+        const userData = await newUser.save();
+        res.status(201).json({
+          _id: userData._id,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          token: await generateToken(userData._id),
+        });
       }
     }
   }
 );
 
-export const signInHandler = asyncHandler(async (req, res) => {
+export const signInHandler = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
-    throw new Error('Email and password are required');
+    throw new Error('Email and password are required')
   } else {
-    try {
-      const user = await User.findOne({ email });
-      if (user) {
-        if (await user.matchPass(password)) {
-          res.status(200).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            token: await generateToken(user._id),
-          });
-        } else {
-          res.status(401);
-          throw new Error('Incorrect password');
-        }
+    const user = await User.findOne({ email });
+    if (user) {
+      if (await user.matchPass(password)) {
+        res.status(200).json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          token: await generateToken(user._id),
+        });
       } else {
         res.status(401);
-        throw new Error(`No user exist with email ${email}`);
+        throw new Error('Incorrect password')
       }
-    } catch (error: any) {
-      console.log(error);
-      res.status(400);
-      throw new Error(error);
+    } else {
+      res.status(401);
+      throw new Error(`No user exist with email ${email}`)
     }
   }
 });
@@ -75,7 +63,7 @@ export const logOutHandler = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
-    throw new Error('Email and password are required');
+    throw new Error('Email and password are required')
   } else {
     try {
       const user = await User.findOne({ email });
@@ -90,16 +78,17 @@ export const logOutHandler = asyncHandler(async (req, res) => {
           });
         } else {
           res.status(401);
-          throw new Error('Incorrect password');
+          throw new Error('Incorrect password')
         }
       } else {
         res.status(401);
-        throw new Error(`No user exist with email ${email}`);
+        throw new Error(`No user exist with email ${email}`)
       }
     } catch (error: any) {
       console.log(error);
       res.status(400);
-      throw new Error(error);
+      res.json(error)
+      // throw new Error(error)
     }
   }
 });

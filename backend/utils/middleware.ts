@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/userSchema';
 import asyncHandler from 'express-async-handler';
 import dotenv from 'dotenv';
-import IUser from '../types/User';
+
 dotenv.config();
 
 interface JwtPayload {

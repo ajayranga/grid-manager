@@ -15,7 +15,6 @@ export const alertSchema = new mongoose.Schema<IAlert>(
       type: String,
       trim: true,
       lowercase: true,
-      unique: true,
       required: [true, 'Email is required'],
     },
     value: {
