@@ -25,7 +25,7 @@ import { UseSignUpSlice } from './slice';
 import { selectError, selectSuccess } from './slice/selectors';
 import { signUpSchema } from './schemas';
 
-export default function StateTextFields() {
+export default function SignUp() {
   const { actions } = UseSignUpSlice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,6 +74,7 @@ export default function StateTextFields() {
       sx={{
         width: '50vw',
         minWidth: '350px',
+        maxWidth: '550px',
         margin: 'auto',
         height: '100vh',
         display: 'flex',
@@ -84,7 +85,10 @@ export default function StateTextFields() {
         open={showSnackBar}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         autoHideDuration={6000}
-        onClose={() => setShowSnackBar(false)}
+        onClose={() => {
+          dispatch(actions.reset());
+          setShowSnackBar(false);
+        }}
       >
         <Alert
           severity="warning"
@@ -108,6 +112,7 @@ export default function StateTextFields() {
                 name="name"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                size="small"
                 placeholder="Enter name"
                 fullWidth
                 error={Boolean(touched.name && errors.name)}
@@ -127,6 +132,7 @@ export default function StateTextFields() {
                 name="email"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                size="small"
                 placeholder="Enter email address"
                 fullWidth
                 error={Boolean(touched.email && errors.email)}
@@ -147,6 +153,7 @@ export default function StateTextFields() {
                 name="phone"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                size="small"
                 placeholder="Enter Phone Number"
                 fullWidth
                 error={Boolean(touched.phone && errors.phone)}
@@ -168,6 +175,7 @@ export default function StateTextFields() {
                 name="password"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                size="small"
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -208,6 +216,7 @@ export default function StateTextFields() {
                 name="confirmPassword"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                size="small"
                 placeholder="Enter confirmPassword"
               />
               {touched.confirmPassword && errors.confirmPassword && (

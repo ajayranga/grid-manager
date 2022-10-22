@@ -25,7 +25,7 @@ import { UseLoginSlice } from './slice';
 import { selectError, selectSuccess } from './slice/selectors';
 import { signInSchema } from './schemas';
 
-export default function StateTextFields() {
+export default function Login() {
   const { actions } = UseLoginSlice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,6 +66,7 @@ export default function StateTextFields() {
       sx={{
         width: '50vw',
         minWidth: '350px',
+        maxWidth: '550px',
         margin: 'auto',
         height: '100vh',
         display: 'flex',
@@ -76,7 +77,10 @@ export default function StateTextFields() {
         open={showSnackBar}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         autoHideDuration={6000}
-        onClose={() => setShowSnackBar(false)}
+        onClose={() => {
+          dispatch(actions.reset());
+          setShowSnackBar(false);
+        }}
       >
         <Alert
           severity="warning"
@@ -102,6 +106,7 @@ export default function StateTextFields() {
                 onChange={handleChange}
                 placeholder="Enter email address"
                 fullWidth
+                size="small"
                 error={Boolean(touched.email && errors.email)}
               />
               {touched.email && errors.email && (
@@ -120,6 +125,7 @@ export default function StateTextFields() {
                 value={values.password}
                 name="password"
                 onBlur={handleBlur}
+                size="small"
                 onChange={handleChange}
                 endAdornment={
                   <InputAdornment position="end">

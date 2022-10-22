@@ -7,6 +7,7 @@ import './App.scss';
 import NotFoundPage from './Pages/NotFoundPage/loadable';
 import Login from './Pages/Login/loadable';
 import SignUp from './Pages/SignUp/loadable';
+import DashBoard from './Pages/DashBoard/loadable';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="home" element={<DashBoard />} />
           <Route element={<NotFoundPage />} />
         </Routes>
       </Router>

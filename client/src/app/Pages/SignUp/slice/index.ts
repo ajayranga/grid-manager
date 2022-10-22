@@ -36,7 +36,12 @@ const signUpSlice = createSlice({
       state.loading = false;
     },
     reset(state, action: PayloadAction) {
-      state = initialState
+      state.userInfo.name = '';
+      state.userInfo.phone = '';
+      state.userInfo.email = '';
+      state.userInfo.token = '';
+      state.error = '';
+      state.loading = false;
     },
   },
 });
