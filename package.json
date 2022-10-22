@@ -9,6 +9,7 @@
     "seed": "ts-node backend/chartDataSeed",
     "installDep": "yarn && yarn  --cwd client",
     "frontend": "yarn --cwd client run start",
+    "build-frontend": "yarn --cwd client run build",
     "dev": "NODE_ENV=development concurrently -n \"backend,frontend\" -c \"red,yellow\" \"yarn run backend\" \"yarn run frontend\"",
     "start": "yarn run build-frontend && NODE_ENV=production ts-node backend/server"
   },
