@@ -10,6 +10,7 @@ import './utils/dbConnect';
 
 import authRoutes from './routes/authRoutes';
 import alertRoutes from './routes/alertRoutes';
+import chartRoutes from './routes/chartRoutes';
 
 const limiter = expressRateLimit({ windowMs: 3 * 60 * 1000, max: 50 });
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth/', authRoutes);
 app.use('/api/alert/', alertRoutes);
+app.use('/api/chart/', chartRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(path.resolve(), 'client', 'dist')));
@@ -42,13 +44,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode
-  res.status(statusCode)
-  console.log(err)
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode);
+  console.log(err);
   res.json({
     message: err.message,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-  })
+  });
 });
 
 export default app;

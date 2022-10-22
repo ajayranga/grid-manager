@@ -1,6 +1,5 @@
 import express from 'express';
 const Router = express.Router();
-
 import {
   signUpHandler,
   signInHandler,

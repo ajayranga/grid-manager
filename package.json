@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "backend": "ts-node-dev --cls --respawn backend/index --ignore /client/*",
+    "seed": "ts-node backend/chartDataSeed",
     "installDep": "yarn && yarn  --cwd client",
     "frontend": "yarn --cwd client run start",
     "dev": "NODE_ENV=development concurrently -n \"backend,frontend\" -c \"red,yellow\" \"yarn run backend\" \"yarn run frontend\"",

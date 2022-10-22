@@ -1,10 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 import IAlert from '../types/Alert';
 
 export const alertSchema = new mongoose.Schema<IAlert>(
   {
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    name: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      required: [true, 'Name is required'],
+      minLength: 4,
+    },
     priceSignal: {
       type: String,
       trim: true,
@@ -21,12 +29,24 @@ export const alertSchema = new mongoose.Schema<IAlert>(
       type: Number,
       default: 0,
     },
-    activeDays: {
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      required: [true, 'Email is required'],
+      validate: [
+        (email: string) => {
+          var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          return re.test(email);
+        },
+        'Please enter a valid email',
+      ],
+    },
+    alertDays: {
       type: [String],
     },
-    isTriggered: {
-      type: Boolean,
-      default: false,
+    phone: {
+      type: String,
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

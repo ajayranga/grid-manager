@@ -1,84 +1,59 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import Alert from '../models/alertSchema';
-
 import User from '../models/userSchema';
 import generateToken from '../utils/generateToken';
 
-export const getAllAlertsHandler = asyncHandler(
-  async (req: Request, res: Response) => {
-    try {
-      const allAlerts = await Alert.find();
-      res.status(201).json(allAlerts);
-    } catch (error: any) {
-      res.status(404);
-      throw new Error(error.message);
-    }
-  }
-);
-
 export const addAlertHandler = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { name, phone, email, criteria, value, alertDays, priceSignal } =
+    req.body;
+  if (
+    !name ||
+    !phone ||
+    !email ||
+    !criteria ||
+    !value ||
+    !alertDays ||
+    !priceSignal
+  ) {
     res.status(400);
-    throw new Error('Email and password are required');
+    throw new Error('Enter All Fields');
   } else {
-    try {
-      const user = await User.findOne({ email });
-      if (user) {
-        if (await user.matchPass(password)) {
-          res.status(200).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            token: await generateToken(user._id),
-          });
-        } else {
-          res.status(401);
-          throw new Error('Incorrect password');
-        }
-      } else {
-        res.status(401);
-        throw new Error(`No user exist with email ${email}`);
-      }
-    } catch (error: any) {
-      console.log(error);
-      res.status(400);
-      throw new Error(error);
-    }
+    const newAlert = new Alert({
+      user: req.user?._id,
+      name,
+      phone,
+      email,
+      criteria,
+      value,
+      alertDays,
+      priceSignal,
+    });
+    await newAlert.save();
+    res.status(200);
+    res.json({ newAlert });
   }
 });
 
-export const deleteAlertHandler = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    res.status(400);
-    throw new Error('Email and password are required');
-  } else {
-    try {
-      const user = await User.findOne({ email });
-      if (user) {
-        if (await user.matchPass(password)) {
-          res.status(200).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            token: await generateToken(user._id),
-          });
-        } else {
-          res.status(401);
-          throw new Error('Incorrect password');
-        }
-      } else {
-        res.status(401);
-        throw new Error(`No user exist with email ${email}`);
-      }
-    } catch (error: any) {
-      console.log(error);
-      res.status(400);
-      throw new Error(error);
-    }
+export const getAllAlertsHandler = asyncHandler(
+  async (req: Request, res: Response) => {
+    const pageNum: any = req.query.pageNum;
+    const allAlerts = await Alert.find({ user: req.user?._id })
+      .skip((parseInt(pageNum) - 1) * 10)
+      .limit(10);
+    const totalAlerts = await Alert.find({ user: req.user?._id }).count();
+    res.status(201).json({ allAlerts, totalAlerts });
   }
+);
+
+export const deleteAlertHandler = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const pageNum: any = req.query.pageNum;
+  if (!id || id === '') throw new Error('No Alert passed to delete');
+  await Alert.deleteOne({ _id: id });
+  const allAlerts = await Alert.find({ user: req.user?._id })
+    .skip((parseInt(pageNum) - 1) * 10)
+    .limit(10);
+  const totalAlerts = await Alert.find({ user: req.user?._id }).count();
+  res.status(201).json({ allAlerts, totalAlerts });
 });
