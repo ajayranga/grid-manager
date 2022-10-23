@@ -18,9 +18,17 @@
     "start": "NODE_ENV=production ts-node backend/index"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/morgan": "^1.9.3",
     "apicache": "^1.6.3",
     "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
+    "concurrently": "^7.5.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -30,20 +38,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "morgan": "^1.10.0",
-    "ts-node": "^10.9.1"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/compression": "^1.7.2",
-    "@types/cookie-parser": "^1.4.3",
-    "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.14",
-    "@types/express-rate-limit": "^6.0.0",
-    "@types/jsonwebtoken": "^8.5.9",
-    "@types/morgan": "^1.9.3",
-    "concurrently": "^7.4.0",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4",
     "yarn": "^1.22.19"
-  }
+  },
+  "devDependencies": {}
 }
