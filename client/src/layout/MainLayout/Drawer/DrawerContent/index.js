@@ -10,12 +10,16 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOutlined';
 import { UseLoginSlice } from 'pages/Login/slice/index';
+import { UseSignUpSlice } from 'pages/SignUp/slice/index';
 
 const DrawerContent = () => {
   const dispatch = useDispatch();
-  const actions = UseLoginSlice();
+  const navigate = useNavigate();
+  const { actions } = UseLoginSlice();
+  const { actions: signUpActions } = UseSignUpSlice();
   return (
     <SimpleBar
       sx={{
@@ -51,7 +55,13 @@ const DrawerContent = () => {
       </Accordion>
 
       <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button onClick={() => dispatch(actions.logout())}>
+        <Button
+          onClick={() => {
+            dispatch(actions.logout());
+            dispatch(signUpActions.logout());
+            navigate('/');
+          }}
+        >
           <PowerSettingsNewOutlinedIcon sx={{ mr: 4 }} /> Log Out
         </Button>
       </Typography>

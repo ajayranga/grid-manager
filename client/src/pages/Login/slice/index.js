@@ -45,6 +45,16 @@ const loginSlice = createSlice({
       state.error = '';
       state.loading = false;
     },
+    logout(state, action) {
+      localStorage.removeItem('userInfo');
+      state.userInfo.name = '';
+      state.userInfo.phone = '';
+      state.userInfo.email = '';
+      state.userInfo.token = '';
+      state.error = '';
+      state.loading = false;
+      state.success = false;
+    },
   },
 });
 
