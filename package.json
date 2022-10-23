@@ -11,7 +11,7 @@
     "backend": "ts-node-dev --cls --respawn backend/index --ignore /client/*",
     "seed": "ts-node backend/chartDataSeed",
     "installDep": "yarn && yarn  --cwd client",
-    "heroku-postbuild": "yarn run installDep && build-frontend",
+    "heroku-postbuild": "yarn run installDep && yarn run build-frontend",
     "frontend": "yarn --cwd client run start",
     "build-frontend": "yarn --cwd client run build",
     "dev": "NODE_ENV=development concurrently -n \"backend,frontend\" -c \"red,yellow\" \"yarn run backend\" \"yarn run frontend\"",
