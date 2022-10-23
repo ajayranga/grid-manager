@@ -11,11 +11,11 @@
     "backend": "ts-node-dev --cls --respawn backend/index --ignore /client/*",
     "seed": "ts-node backend/chartDataSeed",
     "installDep": "yarn --cwd client && yarn",
-    "heroku-postbuild": "yarn run installDep",
+    "heroku-postbuild": "yarn run installDep && yarn run build-frontend",
     "frontend": "yarn --cwd client run start",
     "build-frontend": "yarn --cwd client run build",
     "dev": "NODE_ENV=development concurrently -n \"backend,frontend\" -c \"red,yellow\" \"yarn run backend\" \"yarn run frontend\"",
-    "start": "yarn run build-frontend && NODE_ENV=production ts-node backend/index"
+    "start": "NODE_ENV=production ts-node backend/index"
   },
   "dependencies": {
     "apicache": "^1.6.3",
