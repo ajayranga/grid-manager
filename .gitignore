@@ -3,5 +3,4 @@ node_modules
 *.log
 **./*.log
 dist
-temp
-yarn.lock
+temp 
