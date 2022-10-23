@@ -5,7 +5,7 @@ const PowerCostChart = () => {
   const [series, setSeries] = useState([]);
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://localhost:5000/api/chart');
+      const response = await fetch('/api/chart');
       const chartData = await response.json();
       setSeries(
         (state) =>
