@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 
 // project import
 import Drawer from './Drawer';
 import Header from './Header';
-import navigation from 'menu-items';
-import Breadcrumbs from 'components/@extended/Breadcrumbs';
+import Breadcrumbs from 'components/Breadcrumbs';
 
 // types
 import { selectDrawerOpen, UseMenuSlice } from 'store/menu';
@@ -51,14 +50,7 @@ const MainLayout = () => {
         component='main'
         sx={{ width: '100%', flexGrow: 1, p: { xs: 2, sm: 3 } }}
       >
-        <Toolbar />
-        <Breadcrumbs
-          navigation={navigation}
-          title
-          titleBottom
-          card={false}
-          divider={false}
-        />
+        <Breadcrumbs title titleBottom card={false} divider={false} />
         <Outlet />
       </Box>
     </Box>

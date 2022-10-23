@@ -29,9 +29,9 @@ app.use('/api/alert/', alertRoutes);
 app.use('/api/chart/', chartRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(path.resolve(), 'client', 'dist')));
+  app.use(express.static(path.join(path.resolve(), 'client', 'build')));
   app.get('*', (req: Request, res: Response) =>
-    res.sendFile(path.join(path.resolve(), 'client', 'dist', 'index.html'))
+    res.sendFile(path.join(path.resolve(), 'client', 'build', 'index.html'))
   );
 } else {
   app.get('/', (req: Request, res: Response) => res.send('API is running'));

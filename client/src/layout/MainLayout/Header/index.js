@@ -6,7 +6,6 @@ import { AppBar, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 
 // project import
 import AppBarStyled from './AppBarStyled';
-import HeaderContent from './HeaderContent';
 
 // assets
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
@@ -35,7 +34,6 @@ const Header = ({ open, handleDrawerToggle }) => {
       >
         {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </IconButton>
-      <HeaderContent />
     </Toolbar>
   );
 
@@ -52,13 +50,14 @@ const Header = ({ open, handleDrawerToggle }) => {
 
   return (
     <>
-      {!matchDownMD ? (
+      {matchDownMD && <AppBar {...appBar}>{mainHeader}</AppBar>}
+      {/* {!matchDownMD ? (
         <AppBarStyled open={open} {...appBar}>
           {mainHeader}
         </AppBarStyled>
       ) : (
         <AppBar {...appBar}>{mainHeader}</AppBar>
-      )}
+      )} */}
     </>
   );
 };

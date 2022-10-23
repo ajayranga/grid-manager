@@ -1,18 +1,62 @@
 // project import
-import Navigation from './Navigation';
 import SimpleBar from 'components/third-party/SimpleBar';
+import {
+  Accordion,
+  Button,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import { useDispatch } from 'react-redux';
+import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOutlined';
+import { UseLoginSlice } from 'pages/Login/slice/index';
 
-const DrawerContent = () => (
-  <SimpleBar
-    sx={{
-      '& .simplebar-content': {
+const DrawerContent = () => {
+  const dispatch = useDispatch();
+  const actions = UseLoginSlice();
+  return (
+    <SimpleBar
+      sx={{
+        padding: '2rem',
         display: 'flex',
         flexDirection: 'column',
-      },
-    }}
-  >
-    <Navigation />
-  </SimpleBar>
-);
+      }}
+    >
+      <Typography sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+        <GridViewOutlinedIcon sx={{ mr: 4 }} /> Dash Board
+      </Typography>
+      <Accordion
+        sx={{
+          '& .MuiAccordion-gutters': {
+            background: 'none',
+            display: 'none',
+          },
+          '& .MuiAccordionSummary-gutters': {
+            padding: '0',
+          },
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel2a-content'
+          id='panel2a-header'
+        >
+          <Typography sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <GridViewOutlinedIcon sx={{ mr: 4 }} /> Dash Board
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails></AccordionDetails>
+      </Accordion>
+
+      <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+        <Button onClick={() => dispatch(actions.logout())}>
+          <PowerSettingsNewOutlinedIcon sx={{ mr: 4 }} /> Log Out
+        </Button>
+      </Typography>
+    </SimpleBar>
+  );
+};
 
 export default DrawerContent;

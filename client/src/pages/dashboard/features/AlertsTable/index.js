@@ -30,7 +30,7 @@ import {
   selectTotalAlerts,
 } from './slice/selectors';
 import { selectLoading as selectCreateAlertLoading } from '../CreateAlert/slice/selectors';
-import Loader from 'components/Loader/index';
+import Loader from 'components/Loader';
 import { UseCreateAlertSlice } from '../CreateAlert/slice/index';
 import { Link, useLocation } from 'react-router-dom';
 
