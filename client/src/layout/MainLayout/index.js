@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, useMediaQuery } from '@mui/material';
+import { Box, Paper, useMediaQuery } from '@mui/material';
 
 import Drawer from './Drawer';
 
@@ -39,20 +39,28 @@ const MainLayout = () => {
   }, [drawerOpen]);
 
   return (
-    <Box sx={{ display: 'flex', width: '100%' }}>
+    <Box sx={{ display: 'flex', width: '100%', backgroundColor: '#1a1540' }}>
       <Drawer open={open} handleDrawerToggle={handleDrawerToggle} />
-      <Header open={open} handleDrawerToggle={handleDrawerToggle} />
-      <Box
-        component='main'
+      <Paper
         sx={{
-          width: '100%',
-          flexGrow: 1,
-          p: { xs: 2, sm: 3 },
-          mt: `${matchDownLG ? '60px' : 0}`,
+          margin: '1rem',
+          borderRadius: '1rem',
+          backgroundColor: '#BEBEBE',
         }}
       >
-        <Outlet />
-      </Box>
+        <Header open={open} handleDrawerToggle={handleDrawerToggle} />
+        <Box
+          component='main'
+          sx={{
+            width: '100%',
+            flexGrow: 1,
+            p: { xs: 2, sm: 3 },
+            mt: `${matchDownLG ? '60px' : 0}`,
+          }}
+        >
+          <Outlet />
+        </Box>
+      </Paper>
     </Box>
   );
 };

@@ -25,8 +25,8 @@ const DashboardDefault = () => {
 
   return (
     <Fragment>
-      <Meta title='Dashboard page' />
-      <Grid container rowSpacing={1.5} columnSpacing={2}>
+      <Meta title='Dashboard Page' />
+      <Grid container rowSpacing={0} columnSpacing={1.5}>
         <Grid item xs={12} md={12} lg={12}>
           <Typography variant='h3' sx={{ mb: 3 }}>
             Peak Shaving and alert

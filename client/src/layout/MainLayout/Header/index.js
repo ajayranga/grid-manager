@@ -11,9 +11,6 @@ const Header = ({ open, handleDrawerToggle }) => {
   const theme = useTheme();
   const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const iconBackColor = 'grey.100';
-  const iconBackColorOpen = 'grey.200';
-
   // common header
   const mainHeader = (
     <Toolbar>
@@ -23,9 +20,10 @@ const Header = ({ open, handleDrawerToggle }) => {
         onClick={handleDrawerToggle}
         edge='start'
         color='secondary'
+        size='small'
         sx={{
           color: 'text.primary',
-          bgcolor: open ? iconBackColorOpen : iconBackColor,
+          bgcolor: 'none',
           ml: { xs: 0, lg: -2 },
         }}
       >

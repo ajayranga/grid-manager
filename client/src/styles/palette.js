@@ -7,8 +7,6 @@ import { presetPalettes } from '@ant-design/colors';
 // project import
 import ThemeOption from './theme';
 
-// ==============================|| DEFAULT THEME - PALETTE  ||============================== //
-
 const Palette = (mode) => {
   const colors = presetPalettes;
 
@@ -43,7 +41,7 @@ const Palette = (mode) => {
       },
       ...paletteColor,
       text: {
-        primary: paletteColor.grey[700],
+        primary: '#1a1540', // paletteColor.grey[700],
         secondary: paletteColor.grey[500],
         disabled: paletteColor.grey[400],
       },

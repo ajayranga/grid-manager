@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
-  ButtonGroup,
   Table,
   TableBody,
   TableCell,
@@ -90,7 +89,11 @@ function AlertTableHead() {
             key={headCell.id}
             align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'normal'}
-            sx={{ py: 2 }}
+            sx={{
+              fontSize: 14,
+              fontWeight: 'bold',
+              py: 2,
+            }}
           >
             {headCell.label}
           </TableCell>
@@ -133,7 +136,7 @@ export default function AlertTable() {
   }, [loadingCreateAlert, location.search]);
 
   return (
-    <Box sx={{ padding: '0 1rem' }}>
+    <Box>
       {loading ? (
         <Loader />
       ) : allAlerts && allAlerts.length === 0 ? (
@@ -150,24 +153,21 @@ export default function AlertTable() {
               padding: '1rem 0',
             }}
           >
-            <ButtonGroup>
+            <Box sx={{ m: '0 1rem', display: 'flex' }}>
               <Button variant='contained' sx={{ marginRight: '1rem' }}>
                 Alerts
               </Button>
               <Button variant='outlined'>Triggered Alerts</Button>
-            </ButtonGroup>
+            </Box>
             <IconButton onClick={() => dispatch(actions.fetch({ pageNum: 1 }))}>
               <ReplayIcon />
             </IconButton>
           </Box>
           <TableContainer
             sx={{
-              width: '100%',
+              width: `100%`,
               overflowX: 'auto',
-              position: 'relative',
-              display: 'block',
-              maxWidth: '100%',
-              '& td, & th': { whiteSpace: 'nowrap' },
+              '& td ': { whiteSpace: 'nowrap' },
             }}
             component={Paper}
           >
@@ -189,7 +189,9 @@ export default function AlertTable() {
                   return (
                     <TableRow
                       hover
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
                       tabIndex={-1}
                       key={index}
                     >
@@ -199,16 +201,33 @@ export default function AlertTable() {
                           keyValue[0] === 'priceSignal' ||
                           keyValue[0] === 'criteria' ||
                           keyValue[0] === 'value' ||
-                          keyValue[0] === 'email' ||
-                          keyValue[0] === 'alertDays'
+                          keyValue[0] === 'email'
                         )
                           return (
                             <TableCell
                               key={keyValue[0]}
                               align='center'
-                              sx={{ py: 0 }}
+                              sx={{
+                                fontSize: 14,
+                                py: 0,
+                              }}
                             >
                               {keyValue[1]}
+                            </TableCell>
+                          );
+                        if (keyValue[0] === 'alertDays')
+                          return (
+                            <TableCell
+                              key={keyValue[0]}
+                              align='center'
+                              sx={{
+                                fontSize: 14,
+                                py: 0,
+                              }}
+                            >
+                              {keyValue[1]
+                                .map((itm) => itm.split('day')[0])
+                                .join(',')}
                             </TableCell>
                           );
                         if (keyValue[0] === 'phone')
@@ -244,7 +263,7 @@ export default function AlertTable() {
                 })}
               </TableBody>
             </Table>
-            <Box sx={{ margin: '10px' }}>
+            <Box sx={{ margin: '1.45rem ' }}>
               <Pagination
                 count={Math.ceil(totalAlerts / 10)}
                 variant='outlined'
