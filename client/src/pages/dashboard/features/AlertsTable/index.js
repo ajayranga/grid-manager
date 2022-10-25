@@ -124,7 +124,6 @@ export default function AlertTable() {
     var pageNumber = parseInt(location.search.split('=')[1])
       ? parseInt(location.search.split('=')[1])
       : 1;
-
     dispatch(actions.fetch({ pageNum: pageNumber }));
 
     if (fetchAlertError.includes('Invalid token')) {
