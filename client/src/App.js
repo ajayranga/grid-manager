@@ -1,6 +1,6 @@
 // project import
 import Routes from 'routes';
-import ThemeCustomization from 'themes';
+import ThemeCustomization from 'styles';
 import ScrollTop from 'components/ScrollTop';
 import { UseMenuSlice } from 'store/menu';
 

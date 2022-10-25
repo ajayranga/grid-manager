@@ -2,3 +2,6 @@
     left: -4px !important;
     top: 2px !important;
 }
+.apexcharts-legend{
+    display: none;
+}

@@ -3,15 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useInjectReducer } from 'redux-injectors';
 import { createSelector } from '@reduxjs/toolkit';
 
-// initial state
 const initialState = {
   openItem: ['dashboard'],
   openComponent: 'buttons',
   drawerOpen: false,
   componentDrawerOpen: true,
 };
-
-// ==============================|| SLICE - MENU ||============================== //
 
 const menuSlice = createSlice({
   name: 'menu',

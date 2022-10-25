@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 import { AppBar, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 
-// project import
-import AppBarStyled from './AppBarStyled';
-
 // assets
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
@@ -37,29 +34,16 @@ const Header = ({ open, handleDrawerToggle }) => {
     </Toolbar>
   );
 
-  // app-bar params
   const appBar = {
     position: 'fixed',
     color: 'inherit',
     elevation: 0,
     sx: {
       borderBottom: `1px solid ${theme.palette.divider}`,
-      // boxShadow: theme.customShadows.z1
     },
   };
 
-  return (
-    <>
-      {matchDownMD && <AppBar {...appBar}>{mainHeader}</AppBar>}
-      {/* {!matchDownMD ? (
-        <AppBarStyled open={open} {...appBar}>
-          {mainHeader}
-        </AppBarStyled>
-      ) : (
-        <AppBar {...appBar}>{mainHeader}</AppBar>
-      )} */}
-    </>
-  );
+  return <>{matchDownMD && <AppBar {...appBar}>{mainHeader}</AppBar>}</>;
 };
 
 Header.propTypes = {

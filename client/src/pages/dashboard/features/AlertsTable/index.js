@@ -26,6 +26,7 @@ import { UseAllAlertSlice } from './slice/index';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectAllAlerts,
+  selectError,
   selectLoading,
   selectTotalAlerts,
 } from './slice/selectors';
@@ -33,6 +34,7 @@ import { selectLoading as selectCreateAlertLoading } from '../CreateAlert/slice/
 import Loader from 'components/Loader';
 import { UseCreateAlertSlice } from '../CreateAlert/slice/index';
 import { Link, useLocation } from 'react-router-dom';
+import { UseLoginSlice } from 'pages/Login/slice/index';
 
 const headCells = [
   {
@@ -104,35 +106,39 @@ AlertTableHead.propTypes = {
 };
 
 export default function AlertTable() {
+  const { actions: LoginActions } = UseLoginSlice();
+
   const { actions } = UseAllAlertSlice();
   const location = useLocation();
   UseCreateAlertSlice();
   const dispatch = useDispatch();
   const [order] = useState('asc');
   const [orderBy] = useState('trackingNo');
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum] = useState(1);
   const allAlerts = useSelector(selectAllAlerts);
   const loading = useSelector(selectLoading);
   const totalAlerts = useSelector(selectTotalAlerts);
   const loadingCreateAlert = useSelector(selectCreateAlertLoading);
+  const fetchAlertError = useSelector(selectError);
   useEffect(() => {
-    dispatch(actions.fetch({ pageNum: 1 }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingCreateAlert]);
+    var pageNumber = parseInt(location.search.split('=')[1])
+      ? parseInt(location.search.split('=')[1])
+      : 1;
 
-  useEffect(() => {
-    var pageNumber = parseInt(location.search.split('=')[1]);
     dispatch(actions.fetch({ pageNum: pageNumber }));
-    setPageNum(pageNumber);
+
+    if (fetchAlertError.includes('Invalid token')) {
+      dispatch(LoginActions.logout());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  }, [loadingCreateAlert, location.search]);
 
   return (
     <Box sx={{ padding: '0 1rem' }}>
       {loading ? (
         <Loader />
       ) : allAlerts && allAlerts.length === 0 ? (
-        <Typography variant='h2' component='h2' sx={{ my: 7 }}>
+        <Typography variant='h3' component='h3' sx={{ my: 7 }}>
           No Alerts Saved
         </Typography>
       ) : (

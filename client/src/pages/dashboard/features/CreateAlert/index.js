@@ -108,7 +108,7 @@ export default function Login() {
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant='h4' component='h4'>
+              <Typography variant='h5' component='h5'>
                 Create Alert
               </Typography>
             </Grid>

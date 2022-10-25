@@ -2,7 +2,7 @@
   "name": "client2",
   "version": "1.1.0",
   "private": true,
-  "proxy": "https://grid-mgr.herokuapp.com/",
+  "proxy": "http://localhost:5000/",
   "engines": {
     "node": "16.17.1"
   },

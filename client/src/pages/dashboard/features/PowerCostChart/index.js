@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { Box, Typography } from '@mui/material';
 
 const PowerCostChart = () => {
   const [series, setSeries] = useState([]);
@@ -45,14 +46,18 @@ const PowerCostChart = () => {
     },
   };
   return (
-    <div id='chart'>
+    <Box id='chart'>
+      <Typography variant='h5' sx={{ ml: 2, mt: 2 }}>
+        Power Cost
+      </Typography>
       <ReactApexChart
         options={options}
         series={series}
         type='area'
+        name='power cost'
         height={250}
       />
-    </div>
+    </Box>
   );
 };
 

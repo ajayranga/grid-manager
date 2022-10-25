@@ -1,7 +1,7 @@
 // project import
-import SimpleBar from 'components/third-party/SimpleBar';
 import {
   Accordion,
+  Box,
   Button,
   AccordionSummary,
   Typography,
@@ -21,7 +21,7 @@ const DrawerContent = () => {
   const { actions } = UseLoginSlice();
   const { actions: signUpActions } = UseSignUpSlice();
   return (
-    <SimpleBar
+    <Box
       sx={{
         padding: '2rem',
         display: 'flex',
@@ -65,7 +65,7 @@ const DrawerContent = () => {
           <PowerSettingsNewOutlinedIcon sx={{ mr: 4 }} /> Log Out
         </Button>
       </Typography>
-    </SimpleBar>
+    </Box>
   );
 };
 
