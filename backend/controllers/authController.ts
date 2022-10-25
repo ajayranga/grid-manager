@@ -6,7 +6,8 @@ import generateToken from '../utils/generateToken';
 
 export const signUpHandler = asyncHandler(
   async (req: Request, res: Response) => {
-    const { name, email, password, phone } = req.body;
+    const { name, email, password, phone, role } = req.body;
+    console.log(req.body.role, req.body.name);
     if (!name || !email || !password || !phone) {
       res.status(400);
       throw new Error('Name, Email, Phone Number and password are required');
@@ -18,13 +19,14 @@ export const signUpHandler = asyncHandler(
         res.status(400);
         throw new Error('Email or Phone Number Already registered');
       } else {
-        const newUser = new User({ name, email, password, phone });
+        const newUser = new User({ name, email, password, phone, role });
         const userData = await newUser.save();
         res.status(201).json({
           _id: userData._id,
           name: userData.name,
           email: userData.email,
           phone: userData.phone,
+          role: userData.role,
           token: await generateToken(userData._id),
         });
       }

@@ -13,6 +13,8 @@ const signUp = function* (action) {
         email: action.payload.email,
         phone: action.payload.phone,
         password: action.payload.password,
+        role: action.payload.role,
+        token: action.payload.token,
       },
     });
     localStorage.setItem('userInfo', JSON.stringify(data));

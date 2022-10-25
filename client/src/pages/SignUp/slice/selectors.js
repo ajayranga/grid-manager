@@ -16,6 +16,10 @@ export const selectPhoneNumber = createSelector(
   [selectDomain],
   (signup) => signup.userInfo.phone
 );
+export const selectRole = createSelector(
+  [selectDomain],
+  (signup) => signup.userInfo.role
+);
 export const selectToken = createSelector(
   [selectDomain],
   (signup) => signup.userInfo.token

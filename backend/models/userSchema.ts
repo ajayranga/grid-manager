@@ -47,6 +47,7 @@ export const userSchema = new mongoose.Schema<IUser>(
         'Please enter a valid Phone number',
       ],
     },
+    role: { type: String },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

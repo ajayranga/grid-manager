@@ -30,6 +30,7 @@ export default function SignUp() {
   const { actions } = UseSignUpSlice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [role, setRole] = useState('user');
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const error = useSelector(selectError);
@@ -41,6 +42,7 @@ export default function SignUp() {
     phone: '',
     password: '',
     confirmPassword: '',
+    role: 'user',
     submit: null,
   };
   useEffect(() => {
@@ -54,15 +56,17 @@ export default function SignUp() {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: (values, action) => {
+        // console.log('aaaa', values.role);
         dispatch(
           actions.start({
             name: values.name,
             email: values.email,
             phone: values.phone,
             password: values.password,
+            role: values.role,
           })
         );
-        action.resetForm();
+        // action.resetForm();
       },
     });
   useEffect(() => {
@@ -73,7 +77,7 @@ export default function SignUp() {
     <>
       <Meta title={'Sign Up page'} />
       <Box
-        component="main"
+        component='main'
         sx={{
           width: '50vw',
           minWidth: '350px',
@@ -94,9 +98,9 @@ export default function SignUp() {
           }}
         >
           <Alert
-            severity="warning"
-            color="warning"
-            variant="outlined"
+            severity='warning'
+            color='warning'
+            variant='outlined'
             sx={{ minWidth: '250px' }}
           >
             <AlertTitle>Error</AlertTitle>
@@ -107,16 +111,16 @@ export default function SignUp() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="name">Your Name</InputLabel>
+                <InputLabel htmlFor='name'>Your Name</InputLabel>
                 <OutlinedInput
-                  id="name"
-                  type="name"
+                  id='name'
+                  type='name'
                   value={values.name}
-                  name="name"
+                  name='name'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  size="small"
-                  placeholder="Enter name"
+                  size='small'
+                  placeholder='Enter name'
                   fullWidth
                   error={Boolean(touched.name && errors.name)}
                 />
@@ -127,16 +131,16 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <InputLabel htmlFor='email'>Email Address</InputLabel>
                 <OutlinedInput
-                  id="email"
-                  type="email"
+                  id='email'
+                  type='email'
                   value={values.email}
-                  name="email"
+                  name='email'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  size="small"
-                  placeholder="Enter email address"
+                  size='small'
+                  placeholder='Enter email address'
                   fullWidth
                   error={Boolean(touched.email && errors.email)}
                 />
@@ -148,16 +152,16 @@ export default function SignUp() {
 
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="phone">Phone Number</InputLabel>
+                <InputLabel htmlFor='phone'>Phone Number</InputLabel>
                 <OutlinedInput
-                  id="phone"
-                  type="phone"
+                  id='phone'
+                  type='phone'
                   value={values.phone}
-                  name="phone"
+                  name='phone'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  size="small"
-                  placeholder="Enter Phone Number"
+                  size='small'
+                  placeholder='Enter Phone Number'
                   fullWidth
                   error={Boolean(touched.phone && errors.phone)}
                 />
@@ -168,25 +172,25 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="password">Password</InputLabel>
+                <InputLabel htmlFor='password'>Password</InputLabel>
                 <OutlinedInput
                   fullWidth
                   error={Boolean(touched.password && errors.password)}
-                  id="-password"
+                  id='-password'
                   type={showPassword ? 'text' : 'password'}
                   value={values.password}
-                  name="password"
+                  name='password'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  size="small"
+                  size='small'
                   endAdornment={
-                    <InputAdornment position="end">
+                    <InputAdornment position='end'>
                       <IconButton
-                        aria-label="toggle password visibility"
+                        aria-label='toggle password visibility'
                         onClick={() => setShowPassword(!showPassword)}
                         onMouseDown={(e) => e.preventDefault()}
-                        edge="end"
-                        size="large"
+                        edge='end'
+                        size='large'
                       >
                         {showPassword ? (
                           <VisibilityOutlinedIcon />
@@ -196,7 +200,7 @@ export default function SignUp() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  placeholder="Enter password"
+                  placeholder='Enter password'
                 />
                 {touched.password && errors.password && (
                   <FormHelperText error>{errors.password}</FormHelperText>
@@ -205,7 +209,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={1}>
-                <InputLabel htmlFor="confirmPassword">
+                <InputLabel htmlFor='confirmPassword'>
                   Confirm Password
                 </InputLabel>
                 <OutlinedInput
@@ -213,14 +217,14 @@ export default function SignUp() {
                   error={Boolean(
                     touched.confirmPassword && errors.confirmPassword
                   )}
-                  id="-confirmPassword"
-                  type="password"
+                  id='-confirmPassword'
+                  type='password'
                   value={values.confirmPassword}
-                  name="confirmPassword"
+                  name='confirmPassword'
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  size="small"
-                  placeholder="Enter confirmPassword"
+                  size='small'
+                  placeholder='Enter confirmPassword'
                 />
                 {touched.confirmPassword && errors.confirmPassword && (
                   <FormHelperText error>
@@ -229,6 +233,12 @@ export default function SignUp() {
                 )}
               </Stack>
             </Grid>
+            <label htmlFor='role'>Select role.</label>
+            <select name='role' value={values.role} onChange={handleChange}>
+              <option value=''>Please select</option>
+              <option value='admin'>Admin</option>
+              <option value='user'>User</option>
+            </select>
             {errors.submit && (
               <Grid item xs={12}>
                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -237,20 +247,20 @@ export default function SignUp() {
             <Grid item xs={12}>
               <Button
                 fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-                color="primary"
+                size='large'
+                type='submit'
+                variant='contained'
+                color='primary'
               >
                 Sign Up
               </Button>
             </Grid>
             <Grid item>
               <Link
-                variant="h6"
+                variant='h6'
                 component={RouterLink}
-                to="/"
-                color="text.primary"
+                to='/'
+                color='text.primary'
                 fontSize={'medium'}
                 sx={{ textDecoration: 'none' }}
               >

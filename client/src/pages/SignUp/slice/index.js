@@ -25,6 +25,7 @@ const signUpSlice = createSlice({
       state.userInfo.email = action.payload.email;
       state.userInfo.phone = action.payload.phone;
       state.userInfo.token = action.payload.token;
+      state.userInfo.role = action.payload.role;
       state.error = '';
       state.loading = false;
     },
