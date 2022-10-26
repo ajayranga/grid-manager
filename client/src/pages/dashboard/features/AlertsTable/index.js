@@ -140,7 +140,7 @@ export default function AlertTable() {
       {loading ? (
         <Loader />
       ) : allAlerts && allAlerts.length === 0 ? (
-        <Typography variant='h3' component='h3' sx={{ my: 7 }}>
+        <Typography variant='h3' component='h3' sx={{ m: 7 }}>
           No Alerts Saved
         </Typography>
       ) : (
