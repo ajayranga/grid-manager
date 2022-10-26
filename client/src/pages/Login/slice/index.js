@@ -4,7 +4,7 @@ import { loginSaga } from './saga';
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : { name: '', phone: '', email: '', token: '' };
+  : { name: '', phone: '', email: '', role: '', token: '' };
 
 export const initialState = {
   userInfo: userInfoFromStorage,

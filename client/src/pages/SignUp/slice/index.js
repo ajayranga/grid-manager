@@ -4,7 +4,7 @@ import { signUpSaga } from './saga';
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : { name: '', phone: '', email: '', token: '' };
+  : { name: '', phone: '', email: '', role: '', token: '' };
 
 export const initialState = {
   userInfo: userInfoFromStorage,
@@ -51,6 +51,7 @@ const signUpSlice = createSlice({
       state.userInfo.name = '';
       state.userInfo.phone = '';
       state.userInfo.email = '';
+      state.userInfo.role = '';
       state.userInfo.token = '';
       state.error = '';
       state.loading = false;

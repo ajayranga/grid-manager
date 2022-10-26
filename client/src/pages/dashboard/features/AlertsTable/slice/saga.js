@@ -1,22 +1,28 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects';
+import { call, put, takeLatest, delay, select } from 'redux-saga/effects';
 import { createAlertActions as actions } from '../slice';
 import { request } from 'utils/request';
+import { selectToken } from 'pages/Login/slice/selectors';
+import { selectToken as selectSignUpToken } from 'pages/SignUp/slice/selectors';
 
 const fetchAlert = function* (action) {
   delay(10);
   try {
     const pageNum = action.payload.pageNum ? action.payload.pageNum : 1;
     const requestURL = `/api/alert?pageNum=${pageNum}`;
-    const token = JSON.parse(localStorage.getItem('userInfo')).token;
-    if (token === '') {
+    const loginToken = yield select(selectToken);
+    const signUpToken = yield select(selectSignUpToken);
+    if (loginToken === '' && signUpToken === '') {
       yield put(actions.failed('No Token found'));
     } else {
       const data = yield call(request, requestURL, {
         method: 'get',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${
+            loginToken !== '' ? loginToken : signUpToken
+          }`,
         },
       });
+
       yield put(actions.done(data));
       yield put(actions.success());
     }

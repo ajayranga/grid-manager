@@ -25,7 +25,6 @@ import { useFormik } from 'formik';
 import { createAlertSchema } from './schemas';
 import { selectError, selectSuccess } from './slice/selectors';
 import { UseCreateAlertSlice } from './slice/index';
-
 export default function Login() {
   const { actions } = UseCreateAlertSlice();
   const [showSnackBar, setShowSnackBar] = useState(false);
@@ -65,6 +64,7 @@ export default function Login() {
             value: values.value,
             alertDays: values.alertDays,
             priceSignal: values.priceSignal,
+            // token: loginToken !== '' ? loginToken : signUpToken,
           })
         );
         // action.resetForm();

@@ -12,6 +12,8 @@ import {
   OutlinedInput,
   Snackbar,
   Stack,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -30,7 +32,6 @@ export default function SignUp() {
   const { actions } = UseSignUpSlice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [role, setRole] = useState('user');
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const error = useSelector(selectError);
@@ -42,7 +43,7 @@ export default function SignUp() {
     phone: '',
     password: '',
     confirmPassword: '',
-    role: 'user',
+    role: '',
     submit: null,
   };
   useEffect(() => {
@@ -56,7 +57,6 @@ export default function SignUp() {
       validateOnChange: true,
       validateOnBlur: true,
       onSubmit: (values, action) => {
-        // console.log('aaaa', values.role);
         dispatch(
           actions.start({
             name: values.name,
@@ -66,7 +66,7 @@ export default function SignUp() {
             role: values.role,
           })
         );
-        // action.resetForm();
+        action.resetForm();
       },
     });
   useEffect(() => {
@@ -144,6 +144,7 @@ export default function SignUp() {
                   fullWidth
                   error={Boolean(touched.email && errors.email)}
                 />
+
                 {touched.email && errors.email && (
                   <FormHelperText error>{errors.email}</FormHelperText>
                 )}
@@ -165,6 +166,7 @@ export default function SignUp() {
                   fullWidth
                   error={Boolean(touched.phone && errors.phone)}
                 />
+
                 {touched.phone && errors.phone && (
                   <FormHelperText error>{errors.phone}</FormHelperText>
                 )}
@@ -202,6 +204,7 @@ export default function SignUp() {
                   }
                   placeholder='Enter password'
                 />
+
                 {touched.password && errors.password && (
                   <FormHelperText error>{errors.password}</FormHelperText>
                 )}
@@ -226,6 +229,7 @@ export default function SignUp() {
                   size='small'
                   placeholder='Enter confirmPassword'
                 />
+
                 {touched.confirmPassword && errors.confirmPassword && (
                   <FormHelperText error>
                     {errors.confirmPassword}
@@ -233,12 +237,32 @@ export default function SignUp() {
                 )}
               </Stack>
             </Grid>
-            <label htmlFor='role'>Select role.</label>
-            <select name='role' value={values.role} onChange={handleChange}>
-              <option value=''>Please select</option>
-              <option value='admin'>Admin</option>
-              <option value='user'>User</option>
-            </select>
+
+            <Grid item xs={12}>
+              <Stack spacing={1}>
+                <InputLabel id='role'>Role</InputLabel>
+                <Select
+                  labelId='role'
+                  id='role'
+                  name='role'
+                  value={values.role}
+                  fullWidth
+                  size='small'
+                  input={<OutlinedInput label='Role' />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={Boolean(touched.role && errors.role)}
+                >
+                  <MenuItem value=''>Please Select role.</MenuItem>
+                  <MenuItem value='user'>User</MenuItem>
+                  <MenuItem value='admin'>Admin</MenuItem>
+                </Select>
+
+                {touched.role && errors.role && (
+                  <FormHelperText error>{errors.role}</FormHelperText>
+                )}
+              </Stack>
+            </Grid>
             {errors.submit && (
               <Grid item xs={12}>
                 <FormHelperText error>{errors.submit}</FormHelperText>

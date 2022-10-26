@@ -10,7 +10,7 @@
   "scripts": {
     "backend": "ts-node-dev --cls --respawn backend/index --ignore /client/*",
     "seed": "ts-node backend/chartDataSeed",
-    "installDep": "yarn --cwd client && yarn",
+    "installDep": "yarn --cwd client install && yarn install",
     "heroku-postbuild": "yarn run installDep && yarn run build-frontend",
     "frontend": "yarn --cwd client run start",
     "build-frontend": "yarn --cwd client run build",
@@ -42,6 +42,5 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4",
     "yarn": "^1.22.19"
-  },
-  "devDependencies": {}
+  }
 }
